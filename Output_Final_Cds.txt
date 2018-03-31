@@ -1,0 +1,15 @@
+La solution N°1
+
+* L ordonnancement optimal est donc || 3=>==>>=>1=>==>>=>5=>==>>=>2=>==>>=>4 ||
+** Le Cmax du problème virtuel est de 28
+*** Le Cmax du problème réel est de 30 	
+=========================================================
+La solution N°2
+
+* L ordonnancement optimal est donc || 3=>==>>=>1=>==>>=>2=>==>>=>5=>==>>=>4 ||
+** Le Cmax du problème virtuel est de 39
+*** Le Cmax du problème réel est de 30 	
+=========================================================
+
+ 
+==>Pour Conclure On retient La solution de Sequence Optimal:|| 3=>1=>5=>2=>4 || et d'ordonnancement optimal de Cmax = 30 
