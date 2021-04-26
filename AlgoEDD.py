@@ -42,6 +42,7 @@ def func_trait(x, y, h, s):
         S += x * " " + s + "\n"
     return S
 
+
 def Alg(R):
     """Heurstique de N machines
     :param R:
@@ -51,7 +52,6 @@ def Alg(R):
     if os.path.exists(dir):
         shutil.rmtree(dir)
     os.makedirs(dir)
-
 
     os.makedirs('output/ImagesOutput')
     os.makedirs('output/PdfsOutput')
@@ -142,7 +142,6 @@ def Alg(R):
     data.append(l_0)
     for i in sort:
         data.append(i)
-    
 
     t = Table(data, len(data[0]) * [0.5 * inch], len(data) * [0.5 * inch])
     t.setStyle(TableStyle([('ALIGN', (1, 1), (-2, -2), 'RIGHT'),
@@ -178,7 +177,7 @@ def Alg(R):
     def calcul(k, liste):
         for n in range(len(liste)):
             liste2.append([liste[n][0], sum(liste[n][1:k]),
-                        sum(liste[n][-1:-k:-1])])
+                           sum(liste[n][-1:-k:-1])])
         return (liste2)
 
     r = [i + 2 for i in range(l - 2)]
@@ -328,7 +327,7 @@ def Alg(R):
             ded.write(ch1)
         ded.close()
         f = int(v / 2) + 1
-        new =np.array( np.loadtxt("output/TxtsOutput/gantt__file({0}).txt".format(
+        new = np.array(np.loadtxt("output/TxtsOutput/gantt__file({0}).txt".format(
             p), delimiter=",", unpack=True))
         # print(new)
         htl = []
@@ -401,7 +400,8 @@ def Alg(R):
         manager = plt.get_current_fig_manager()
         plt.savefig("output/ImagesOutput/output_diagram_gantt({0}).png".format(
             p), bbox_inches='tight')
-        pp = PdfPages('output/PdfsOutput/output_diagram_gantt({0}).pdf'.format(p))
+        pp = PdfPages(
+            'output/PdfsOutput/output_diagram_gantt({0}).pdf'.format(p))
         pp.savefig()
         pp.close()
         plt.show()
@@ -451,7 +451,8 @@ def Alg(R):
         Story.append(Paragraph(ptext, styles["Justify"]))
         Story.append(Spacer(1, 12))
 
-        im = Image("output/ImagesOutput/output_diagram_gantt({0}).png".format(pp-1))
+        im = Image(
+            "output/ImagesOutput/output_diagram_gantt({0}).png".format(pp-1))
         Story.append(im)
         ptext = "\t \t \t \t Diagramme de Gantt (seq ={0}) avec Cmax({2})={1})".format(
             pdflis[pp-1][1], pdflis[pp-1][2], pp)
@@ -855,10 +856,10 @@ def DelUser():
 
 
 if os.path.isfile(creds):
-    Login()
-    msg = MIMEMultipart()
-    Button(text="Action", command=callback()).pack()
+    # Login()
+    #msg = MIMEMultipart()
+    callback()
+    #Button(text="Action", command=callback()).pack()
     sendd()
 else:  # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup :)
     Signup()
-
