@@ -1,3 +1,5 @@
+import os
+import shutil
 import getpass
 import hashlib
 import sys
@@ -6,7 +8,6 @@ import pyocr.builders
 import pyocr
 from PIL import Image as PI
 from wand.image import Image
-import os
 import email.mime.application
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -25,7 +26,7 @@ import operator
 from matplotlib.backends.backend_pdf import PdfPages
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from reportlab.lib import colors
+from reportlab.lib import colors as cl
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
@@ -41,20 +42,21 @@ def func_trait(x, y, h, s):
         S += x * " " + s + "\n"
     return S
 
-
-def calcul(k, liste):
-    for n in range(len(liste)):
-        liste2.append([liste[n][0], sum(liste[n][1:k]),
-                       sum(liste[n][-1:-k:-1])])
-    return (liste2)
-
-
 def Alg(R):
     """Heurstique de N machines
     :param R:
     :return:
     """
-    nbn = "Algo_Cds_Output.pdf"
+    dir = 'output'
+    if os.path.exists(dir):
+        shutil.rmtree(dir)
+    os.makedirs(dir)
+
+
+    os.makedirs('output/ImagesOutput')
+    os.makedirs('output/PdfsOutput')
+    os.makedirs('output/TxtsOutput')
+    nbn = "output/PdfsOutput/Algo_Cds_Output.pdf"
 
     doc = SimpleDocTemplate(nbn, pagesize=letter,
                             rightMargin=72, leftMargin=72,
@@ -62,7 +64,7 @@ def Alg(R):
     Story = []
     tit = "Flow-Shop à N machines, Cmax"
     stit = "Contexte"
-    logo = "/home/rtimopy/Documents/index.png"
+    logo = "img/index.png"
     im = Image(logo, 1 * inch, 1 * inch)
     Story.append(im)
     styles = getSampleStyleSheet()
@@ -112,7 +114,7 @@ def Alg(R):
     Story.append(Paragraph(ptext, styles["Normal"]))
     Story.append(Spacer(1, 12))
 
-    fil = "outputCDS.txt"
+    fil = "output/TxtsOutput/outputCDS.txt"
     fe = open(fil, "w")
     try:
         hrs = open(R, "r")
@@ -140,17 +142,18 @@ def Alg(R):
     data.append(l_0)
     for i in sort:
         data.append(i)
+    
 
     t = Table(data, len(data[0]) * [0.5 * inch], len(data) * [0.5 * inch])
     t.setStyle(TableStyle([('ALIGN', (1, 1), (-2, -2), 'RIGHT'),
-                           ('TEXTCOLOR', (1, 1), (-2, -2), colors.red),
+                           ('TEXTCOLOR', (1, 1), (-2, -2), cl.red),
                            ('VALIGN', (0, 0), (0, -1), 'TOP'),
-                           ('TEXTCOLOR', (0, 0), (0, -1), colors.blue),
+                           ('TEXTCOLOR', (0, 0), (0, -1), cl.blue),
                            ('ALIGN', (0, -1), (-1, -1), 'CENTER'),
                            ('VALIGN', (0, -1), (-1, -1), 'MIDDLE'),
-                           ('TEXTCOLOR', (0, -1), (-1, -1), colors.green),
-                           ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-                           ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                           ('TEXTCOLOR', (0, -1), (-1, -1), cl.green),
+                           ('INNERGRID', (0, 0), (-1, -1), 0.25, cl.black),
+                           ('BOX', (0, 0), (-1, -1), 0.25, cl.black),
                            ]))
 
     Story.append(t)
@@ -171,6 +174,12 @@ def Alg(R):
     liste, liste2 = [], []
     for n in range(len(sortint) // l):
         liste.append(sortint[n * l:(n + 1) * l])
+
+    def calcul(k, liste):
+        for n in range(len(liste)):
+            liste2.append([liste[n][0], sum(liste[n][1:k]),
+                        sum(liste[n][-1:-k:-1])])
+        return (liste2)
 
     r = [i + 2 for i in range(l - 2)]
     # print(r)
@@ -307,7 +316,7 @@ def Alg(R):
             list_excel.append(db4)
 
         print(list_excel)
-        ded = open("gantt__file({0}).txt".format(p), "w")
+        ded = open("output/TxtsOutput/gantt__file({0}).txt".format(p), "w")
         k = 0
 
         for i in list_excel:
@@ -319,8 +328,8 @@ def Alg(R):
             ded.write(ch1)
         ded.close()
         f = int(v / 2) + 1
-        new = np.loadtxt("gantt__file({0}).txt".format(
-            p), delimiter=",", unpack=True)
+        new =np.array( np.loadtxt("output/TxtsOutput/gantt__file({0}).txt".format(
+            p), delimiter=",", unpack=True))
         # print(new)
         htl = []
         for j in range(1, new.shape[0]):
@@ -331,11 +340,13 @@ def Alg(R):
         htt1 = [(ht[i] + ht[i + 1]) / 2 for i in range(len(ht) - 1)]
         # print(set(htl))
         htt = sorted(htt1)
-        # print(htt)
+        print(htt)
+        print(type(new))
         cmap = plt.get_cmap("gnuplot")
         colors = [cmap(i) for i in np.linspace(0, 1, 2 * v)]
+
         for i in range(1, new.shape[0] - 1, 2):
-            plt.hlines(new[0][0], new[i], new[i + 1], colors=colors[i], lw=28)
+            plt.hlines(new[0], new[i], new[i + 1], colors=colors[i], lw=28)
             plt.text(htt[int((i - 1) / 2)], 1, str(h[int(i / 2)]))
             cv = 0.0
             while cv < new[0][0]:
@@ -388,10 +399,9 @@ def Alg(R):
             0.75*list_excel[-1][-1][-1], b+1.6), arrowprops=dict(facecolor='green', shrink=0.05))
         #plt.text( list_excel[-1][-1][-1], b + 1, S )
         manager = plt.get_current_fig_manager()
-        manager.window.showMaximized()
-        plt.savefig("output_diagram_gantt({0}).png".format(
+        plt.savefig("output/ImagesOutput/output_diagram_gantt({0}).png".format(
             p), bbox_inches='tight')
-        pp = PdfPages('output_diagram_gantt({0}).pdf'.format(p))
+        pp = PdfPages('output/PdfsOutput/output_diagram_gantt({0}).pdf'.format(p))
         pp.savefig()
         pp.close()
         plt.show()
@@ -399,7 +409,7 @@ def Alg(R):
         pdflis.append([b, h, list_excel[-1][-1][-1]])
     print(pdflis)
     pp = 0
-    dfre = open("Output_Final_Cds.txt", "w")
+    dfre = open("output/TxtsOutput/Output_Final_Cds.txt", "w")
     klks = sorted(klks.items(), key=operator.itemgetter(1))
     for keyy, values in klk.items():
         pp += 1
@@ -441,7 +451,7 @@ def Alg(R):
         Story.append(Paragraph(ptext, styles["Justify"]))
         Story.append(Spacer(1, 12))
 
-        im = Image("output_diagram_gantt({0}).png".format(pp-1))
+        im = Image("output/ImagesOutput/output_diagram_gantt({0}).png".format(pp-1))
         Story.append(im)
         ptext = "\t \t \t \t Diagramme de Gantt (seq ={0}) avec Cmax({2})={1})".format(
             pdflis[pp-1][1], pdflis[pp-1][2], pp)
@@ -687,7 +697,7 @@ def sendd():
         bar.finish()
     if a not in ["", "Y", "y"]:
         barr()
-        print("Check your File pef to see the result .. Enjoy :)  ")
+        print("Check the PDF File in output folder to see the result .. Enjoy :)  ")
         time.sleep(1.0)
         exit()
     else:
@@ -851,3 +861,4 @@ if os.path.isfile(creds):
     sendd()
 else:  # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup :)
     Signup()
+

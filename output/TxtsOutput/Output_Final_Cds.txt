@@ -1,14 +1,14 @@
-La solution NÂ°1
+La solution N°1
 
 * L ordonnancement optimal est donc || 3=>==>>=>1=>==>>=>5=>==>>=>2=>==>>=>4 ||
-** Le Cmax du problÃ¨me virtuel est de 28
-*** Le Cmax du problÃ¨me rÃ©el est de 30 	
+** Le Cmax du problème virtuel est de 28
+*** Le Cmax du problème réel est de 30 	
 =========================================================
-La solution NÂ°2
+La solution N°2
 
 * L ordonnancement optimal est donc || 3=>==>>=>1=>==>>=>2=>==>>=>5=>==>>=>4 ||
-** Le Cmax du problÃ¨me virtuel est de 39
-*** Le Cmax du problÃ¨me rÃ©el est de 30 	
+** Le Cmax du problème virtuel est de 39
+*** Le Cmax du problème réel est de 30 	
 =========================================================
 
  
