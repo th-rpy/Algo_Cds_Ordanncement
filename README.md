@@ -1,8 +1,8 @@
-## Jackson Algorithm with Python
+# Jackson Algorithm with Python
 
 Python's Implementation of a flow shop scheduling algorithm (JACKSON) (N tasks on M machines): CDS heuristic.
 
-# Earliest Due Date (EDD) 
+## Earliest Due Date (EDD) 
 
 EDD is algorithm proposed by Jackson in 1955 : 
 
