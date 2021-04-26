@@ -683,6 +683,7 @@ def callback():
         ff = f
         f.close()
         Alg(filname)
+        sendd()
 
 
 def sendd():
@@ -706,7 +707,7 @@ def sendd():
 
     msg['Subject'] = 'File pdf : Result of Algo CDS'
     msg['From'] = input('Enter Your Gmail (exp : xyz@gmail.com):')
-    passwd = "thamersarray1994"
+    passwd = input('Enter your password: ')
     assd = int(input("enter THe nmbr of recp :"))
     too = []
     for i in range(assd):
@@ -862,4 +863,4 @@ if os.path.isfile(creds):
     #Button(text="Action", command=callback()).pack()
     sendd()
 else:  # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup :)
-    Signup()
+    callback()
