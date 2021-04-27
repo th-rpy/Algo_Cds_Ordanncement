@@ -22,8 +22,8 @@ Just download the code (open terminal or cmd and paste this line: `git clone htt
 - - Enter the inputs with the console (cmd or terminal) and code will save its in text file.
 
 ## Demo (GIF)
-![](https://github.com/timotito/Algo_Cds_Ordanncement/blob/master/output/ImagesOutput/Demo.gif?raw=true)
+![](https://github.com/th-rpy/Algo_Cds_Ordanncement/blob/master/img/Demo.gif?raw=true)
 
 
 
-![](https://github.com/timotito/Algo_Cds_Ordanncement/blob/master/output/ImagesOutput/output_diagram_gantt(1).png?raw=true)
+![](https://github.com/th-rpy/Algo_Cds_Ordanncement/blob/master/output/ImagesOutput/output_diagram_gantt(1).png?raw=true)
